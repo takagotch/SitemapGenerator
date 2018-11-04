@@ -20,7 +20,10 @@ every 1.day, :at => '5:00 am' do
   rake "-s sitemap:refresh"
 end
 
+# robts.txt
 Sitemap: http://www.example.com/sitemap.xml.gz
+
+SitemapGenerator::Interpreter.send :include, RoutingHelper
 
 
 
