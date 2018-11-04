@@ -51,7 +51,7 @@ SitemapGenerator::Sitemap.public_path = 'tmp/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 SitemapGenerator::Sitemap.adapter = SitemapGenerator::WaveAdapter.new
 
-%w().each do |subdomain|
+%w(google bing apple).each do |subdomain|
   SitemapGenerator::Sitemap.default_host = "http://#{subdomain}.mysite.com"
   SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{subdomain}"
   SitemapGenerator::Sitemap.create do
@@ -77,6 +77,18 @@ SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/bing"
 SitemapGenerator::Sitemap.create do
   add '/home'
 end
+
+SitemapGenerator::Sitemap.default_host = "http://www.example.com"
+SitemapGenerator::Sitemap.create do
+  add '/welcome'
+end
+
+SitemapGenerator::Sitemap.default_host = "http://www.example.com"
+SitemapGenerator::Sitemap.create_index = true
+SitemapGenerator::Sitemap.create do
+  add '/welcome'
+end
+
 ```
 
 ```
@@ -84,10 +96,32 @@ gem install 'sitemap_generator'
 
 gem 'sitemap_generator'
 
+rake sitemap:refresh CONFIG_FILE="config/google_sitempa.rb"
+rake sitemap:refresh CONFIG_FILE="conifg/apple_sitemap.rb"
+rake sitemap:refresh CONFIG_FILE="config/bing_sitemap.rb"
+
+rake sitemap:refresh CONFIG_FILE="config/geo_sitemap.rb"
+
 
 ```
 
 ```
+<?xml version="1.0" encoding="UTF-8">
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xsi:schemaLocation="http://www.sitemap.org/schemas/sitemap/0.9 http://www.sitemap.org/schemas/sitemap/0.9/sitemap.xsd" >
+  <url>
+    <loc>http://www.example.com</loc>
+    <clastmod2018-11-05T00:03:30+00:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://www.example.com/welcome/</loc>
+    <lastmod>2018-11-05T00:03:30+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
+
 
 ```
 
